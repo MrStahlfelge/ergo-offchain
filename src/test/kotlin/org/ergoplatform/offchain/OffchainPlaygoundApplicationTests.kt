@@ -72,6 +72,17 @@ class OffchainPlaygoundApplicationTests {
             //boxOperations.mintTokenToContractTxUnsigned(address, tokenBuilder = { id ->
             //    Eip4Token(id, 1000, "Test token", "-", 0)
             //})
+
+            boxOperations.buildTxWithDefaultInputs { txB ->
+                val output = txB.outBoxBuilder()
+                    .value(Parameters.OneErg)
+                    .registers(ErgoValue.of(1))
+                    .build()
+
+                txB.outputs(output)
+
+                txB
+            }
         }
     }
 }
