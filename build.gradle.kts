@@ -19,6 +19,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+	implementation("org.ergoplatform:ergo-appkit_2.11:4.0.11")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
