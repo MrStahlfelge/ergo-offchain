@@ -1,10 +1,9 @@
 package org.ergoplatform.offchain
 
 import org.ergoplatform.appkit.*
+import org.ergoplatform.appkit.impl.Eip4TokenBuilder
 import org.junit.jupiter.api.Test
 import org.springframework.core.io.ClassPathResource
-import java.time.Instant
-import java.time.LocalDate
 import java.util.*
 
 class OffchainPlaygoundApplicationTests {
@@ -43,5 +42,36 @@ class OffchainPlaygoundApplicationTests {
                 )
                 .build()
         )
+    }
+
+    @Test
+    fun sendTx() {
+        RestApiErgoClient.create(
+            "https://node.ergo.watch/",
+            NetworkType.MAINNET,
+            "",
+            RestApiErgoClient.defaultMainnetExplorerUrl
+        ).execute { ctx ->
+
+            val prover = ctx.newProverBuilder()
+                .withMnemonic(SecretString.create(""), SecretString.empty(), false)
+                .withEip3Secret(0)
+                .build()
+
+            println(prover.eip3Addresses.first())
+
+            //BoxOperations.createForSender(Address.create("9i6UmaoJKWHgWkuq1EJUoYu2hrkRkxAYwQjDotHRHfGrBo16Rss"), ctx)
+
+            val boxOperations = BoxOperations.createForEip3Prover(prover, ctx)
+
+            boxOperations
+                .withAmountToSpend(Parameters.OneErg)
+                //.withTokensToSpend(listOf(ErgoToken("bc01920a596a714d5a87d7ddf18f2fc9e1cfc9b21f52d90d1423d1f13fca4ba1", 1)))
+                .send(Address.create("9i6UmaoJKWHgWkuq1EJUoYu2hrkRkxAYwQjDotHRHfGrBo16Rss"))
+
+            //boxOperations.mintTokenToContractTxUnsigned(address, tokenBuilder = { id ->
+            //    Eip4Token(id, 1000, "Test token", "-", 0)
+            //})
+        }
     }
 }
