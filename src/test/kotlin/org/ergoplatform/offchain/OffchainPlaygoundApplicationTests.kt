@@ -2,6 +2,7 @@ package org.ergoplatform.offchain
 
 import org.ergoplatform.appkit.*
 import org.ergoplatform.appkit.impl.Eip4TokenBuilder
+import org.ergoplatform.appkit.impl.NodeAndExplorerDataSourceImpl
 import org.junit.jupiter.api.Test
 import org.springframework.core.io.ClassPathResource
 import java.util.*
@@ -83,6 +84,9 @@ class OffchainPlaygoundApplicationTests {
 
                 txB
             }
+
+            // Explorer API:
+            // (ctx.dataSource as NodeAndExplorerDataSourceImpl).explorerApi.getApiV1AddressesP1BalanceTotal()
         }
     }
 }
