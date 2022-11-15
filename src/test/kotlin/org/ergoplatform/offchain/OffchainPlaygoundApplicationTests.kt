@@ -17,7 +17,11 @@ class OffchainPlaygoundApplicationTests {
         }
 
         val contractCompiled =
-            ColdErgoClient(NetworkType.MAINNET, Parameters.ColdClientMaxBlockCost).execute { ctx ->
+            ColdErgoClient(
+                NetworkType.MAINNET,
+                Parameters.ColdClientMaxBlockCost,
+                Parameters.ColdClientBlockVersion
+            ).execute { ctx ->
                 ctx.compileContract(constants, contractSource)
             }
 
@@ -68,6 +72,7 @@ class OffchainPlaygoundApplicationTests {
             boxOperations
                 .withAmountToSpend(Parameters.OneErg)
                 //.withTokensToSpend(listOf(ErgoToken("bc01920a596a714d5a87d7ddf18f2fc9e1cfc9b21f52d90d1423d1f13fca4ba1", 1)))
+                .withInputBoxesLoader(ExplorerAndPoolUnspentBoxesLoader().withAllowChainedTx(true))
                 .send(Address.create("9i6UmaoJKWHgWkuq1EJUoYu2hrkRkxAYwQjDotHRHfGrBo16Rss"))
 
             //boxOperations.mintTokenToContractTxUnsigned(address, tokenBuilder = { id ->
